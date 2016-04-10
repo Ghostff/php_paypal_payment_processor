@@ -1,15 +1,12 @@
 <?php
-
 require_once('funcs.php');
-$start = microtime(true);
-$pay = new payment('donate', 'frankchris@hotmail.com', 'array');
-$pay->info('USD', 50.30, 'chrys', 'ugwu', 'frankchris@hotmail.com', 'address2', null, 'city', 'tx', '545', 'country', '8323321903', null, null);
-$pay->save(true, true);
-
+$pay = payment('donate', 'email', 'string');
+$pay->info('USD', 50.30, 'chrys', 'ugwu', 'frankchris76@gmail.com', 'address2', null, 'city', 'tx', '5454', 'us', 'phone', null, null);
+$pay->save(false, false, 'return');
 if(!$pay->error)
-	echo $pay->success;
+	var_dump($pay->success);
 else
-	var_dump( $pay->error);
-echo '<br>';
-printf("Total time cached query: %.6fs\n", microtime(true) - $start);
+	var_dump($pay->error);
+?>
+
 	

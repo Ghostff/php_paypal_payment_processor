@@ -1,18 +1,17 @@
 <?php
 /*-----------------------------------------PAYMENT--------------------------------------------------------
-+--+ donate
-+--+ buy_now
-+--+ add_to_cart
-+--+ gift
-+--+ subscription
-+--+ billing
-+--+ payment_plan
-payment(type_of_payment, paypal_email, check_if_email_is_a_valid_paypal_email)
+payment methods(
+	+--+ donate (done)
+	+--+ buy_now
+	+--+ add_to_cart
+	+--+ gift
+	+--+ subscription
+	+--+ billing
+	+--+ payment_plan
+	)
+payment(payment method, paypal bussness email adress, error return type)
 
 -----------------------------------------PAYMENT-END--------------------------------------------------------*
-
-
-
 /*-----------------------------------------INFO--------------------------------------------------------
 $pay->info(currency,
 			ammount, +++++++++++++++++++++ maxlen(20) type(numeric or float characters only)
@@ -29,23 +28,20 @@ $pay->info(currency,
 			night_phone_b = null, +++++++++++++++++++++ maxlen(4) type(Alpha numeric characters only)
 			night_phone_c = null); +++++++++++++++++++++ maxlen(3) type(Alpha numeric characters only)
 		)
-https://www.paypal.com/cgi-bin/webscr?cmd=_pdn_xclick_prepopulate_outside (detailed doc)*
+https://www.paypal-knowledge.com/infocenter/index?page=content&id=FAQ1372&actp=LIST (detailed doc)*
 			
 -----------------------------------------END-INFO--------------------------------------------------------*/
+
+
+
 /*-----------------------------------------SAVE--------------------------------------------------------
 $pay->save(
 			save_user_info, if true save user data( defualt user_data.log not database)
 			email_receipt, email receipt of payment( defualt false)
+			new_link, arg(return): displays the html link
+					  arg(redirect): redirects to paypal checkout
+					  arg(false, null or empty) retrun the status of save_user_info and email_receipt
 		)
-
-
-
-
-
-
-
-
-
 
 -----------------------------------------SAVE-END--------------------------------------------------------*/
 ?>
