@@ -9,7 +9,7 @@ payment methods(
 	+--+ billing
 	+--+ payment_plan
 	)
-payment(payment method, paypal bussness email adress, error return type)
+payment(payment method, paypal bussness email adress, item name, error return type)
 
 -----------------------------------------PAYMENT-END--------------------------------------------------------*
 /*-----------------------------------------INFO--------------------------------------------------------
