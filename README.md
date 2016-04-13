@@ -3,11 +3,17 @@
 instantiate
 ```php
 #$pay = payment(payment type, business email, error return type);
-$pay = payment('donate', 'email', 'string');
+#args as array
+$pay = payment('donate', array('paypal_email', 'Donation to my website', 'string'));
+#args as string
+$pay = payment('donate', 'paypal_email', 'Donation to my website', 'string')
 ```
 
 user defined datas
 ```php
+#data as array 
+$pay->info(array('USD', '50', 'fname', 'lname', 'email', 'addr1', null, 'city', 'state', 'zip', 'country', 'phone', null, null));
+#data as string
 $pay->info('USD', 'amt', 'fname', 'lname', 'email', 'addr1', null, 'city', 'tx', 'zip', 'country', 'phone', null, null);
 ```
 

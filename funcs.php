@@ -5,7 +5,7 @@ class payment_solution
 {
 	public $error = null;
 	public $success = false;
-	protected $pp_cmd = null;
+	protected $product_name = null;
 	protected $pp_email = null;
 	protected $error_output;
 	protected $pp_url = 'https://www.paypal.com/cgi-bin/webscr?';
@@ -14,8 +14,9 @@ class payment_solution
 	public function __construct()
 	{
 		if($this->error_output != 'array' && $this->error_output != 'string')
-			$this->error = $this->lang("INVL_ER_PRO");
-		
+			$this->error = $this->lang("INVL_ER_PRO_3", array(3));
+		else if(trim($this->product_name) == false)
+			$this->error = $this->lang("INVL_ER_PRO_2", array(2));
 	}
 	public function save($save_user_data, $email_receipt = null, $new_link = null)
 	{
@@ -178,21 +179,39 @@ class payment_solution
 }
 class donate extends payment_solution
 {
-	public function __construct($email, $return_type){
+	public function __construct($email, $product_name, $return_type = null){
 		$this->pp_email = $email;
+		$this->product_name = $product_name;
 		$this->error_output = $return_type;
 		parent::__construct();
 	}
-	public function info($currency, $ammount, 
-						$first_name, $last_name, $email_address,
-						$address1, $address2 = null, $city, $state, $zip_code, $country,
+	public function info($currency, $ammount = null, 
+						$first_name = null, $last_name = null, $email_address = null,
+						$address1 = null, $address2 = null, $city = null, $state = null, $zip_code = null, $country = null,
 						$night_phone_a = null, $night_phone_b = null, $night_phone_c = null)
 	{
+		if(is_array($currency)){
+			$ammount 		= $currency[1];
+			$first_name 	= $currency[2];
+			$last_name 		= $currency[3];
+			$email_address  = $currency[4];
+			$address1 		= $currency[5];
+			$address2 		= $currency[6];
+			$city 			= $currency[7];
+			$state 			= $currency[8];
+			$zip_code 		= $currency[9];
+			$country 		= $currency[10];
+			$night_phone_a  = $currency[11];
+			$night_phone_b  = $currency[12];
+			$night_phone_c  = $currency[13];
+			$currency 		= $currency[0];
+		}
 		if(!$this->error){
 			$this->form_data['cmd'] 			= '_xclick';
 			$this->form_data['business'] 		= $this->pp_email;
+			$this->form_data['item_name'] 		= $this->product_name;
+			//user input starts
 			$this->form_data['currency_code'] 	= $this->validate_input($currency, 'req|char|minmax(3,3)', 'CU');
-			$this->form_data['item_name'] 		= 'Donation to my website';
 			$this->form_data['amount'] 			= $this->validate_input($ammount, 'req|num|minmax(1, 50)', 'AM');
 			$this->form_data['first_name'] 		= $this->validate_input($first_name, 'req|charnum|minmax(2,20)', 'FN');
 			$this->form_data['last_name'] 		= $this->validate_input($last_name, 'req|charnum|minmax(2,20)', 'LN');
@@ -210,14 +229,15 @@ class donate extends payment_solution
 		return $this->form_data;
 	}	
 }
-class click extends payment_solution
-{
-	
-}
-function payment($payment_type, $email, $return_type)
+function payment($payment_type, $email, $product_name = null, $return_type = null)
 {
 	if(class_exists($payment_type)){
-		return (object) new $payment_type($email, $return_type);
+		if(is_array($email)){
+			$product_name = $email[1];
+			$return_type = $email[2];
+			$email = $email[0];	
+		}
+		return (object) new $payment_type($email, $product_name, $return_type);
 	}
 	else{
 		echo "No Payment method called <code>--> $payment_type <--</code>, check ur spellings";

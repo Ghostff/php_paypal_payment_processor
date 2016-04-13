@@ -1,8 +1,8 @@
 <?php
 require_once('funcs.php');
-$pay = payment('donate', 'email', 'string');
-$pay->info('USD', 'amt', 'fname', 'lname', 'email', 'addr1', (null|addr2), 'city', 'tx', '5454', 'country', 'phone', null, null);
-$pay->save(false, false, 'return');
+$pay = payment('donate', 'paypal_email', 'Donation to my website', 'string');
+$pay->info('USD', '50', 'fname', 'lname', 'email', 'addr1', null, 'city', 'state', 'zip', 'country', 'phone', null, null);
+$pay->save(false, false, 'redirect');
 if(!$pay->error)
 	var_dump($pay->success);
 else

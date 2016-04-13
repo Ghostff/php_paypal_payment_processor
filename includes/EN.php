@@ -62,7 +62,8 @@ $lang = array_merge($lang,array(
 	"INVL_ARG_RTN_1" 		=> "invalid save type argument <code>%m1%</code> (<code> --> true or false <-- </code>, paypal_email, link_handler)",
 	"INVL_ARG_RTN_2" 		=> "invalid save type argument <code>%m1%</code> (type, <code> --> true or false <-- </code>, link_handler)",
 	"INVL_ARG_RTN_3" 		=> "invalid save type argument <code>%m1%</code> (type, paypal_email, <code> --> 'return', 'redirect', empty, null or false <-- </code>)",
-	"INVL_ER_PRO" 		=> "invalid error return type argument <code>%m1%</code>(type, paypal_email, <code> --> array</code>, <code>string</code>, <code>empty or null <-- </code>)",
+	"INVL_ER_PRO_2" 		=> "invalid error return type argument <code>%m1%</code> (type, paypal_email, <code>-->product name<--</code>, error_return_type)",
+	"INVL_ER_PRO_3" 		=> "invalid error return type argument <code>%m1%</code> (type, paypal_email, error_return_type,  <code> --> array</code>, <code>string</code>, <code>empty or null <-- </code>)",
 	));
 
 ?>
