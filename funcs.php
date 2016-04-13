@@ -29,6 +29,7 @@ class payment_solution
 					+----------------------------------------------------
 					|	      ---------[".$this->form_data['first_name']." ".$this->form_data['last_name']."]----------
 					+----------------------------------------------------
+					|NAME:		".$this->form_data['item_name']."
 					|FNAME:		".$this->form_data['first_name']."
 					|LNAME:		".$this->form_data['last_name']."
 					|CURENCY:	".$this->form_data['currency_code']."

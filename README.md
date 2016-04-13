@@ -2,7 +2,7 @@
 
 instantiate
 ```php
-#$pay = payment(payment type, business email, error return type);
+#$pay = payment(payment type, business email, item name, error return type);
 #args as array
 $pay = payment('donate', array('paypal_email', 'Donation to my website', 'string'));
 #args as string
