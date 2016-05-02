@@ -1,0 +1,30 @@
+_P_S
+require_once('funcs.php');
+$pay = payment('donate', 'my paypal business email', 'Donation to my website', 'string');
+/*
+---------- USER DEFINED DATAS -------------------
+@param 1  currency type eg("USD", "EUR", "GBP", "CAD", "JPY")
+@param 2  ammount eg(50, 55.5, 99.99)
+@param 3  first name (A-Z) only
+@param 4  last name (A_Z) only
+@param 5  email address
+@param 6  address 1
+@param 7  address 2 (optional: null)
+@param 8  city name
+@param 9  state name (2 letters abbreviation) eg('mx', 'tx', lg')
+@param 10 zip code eg('7765', '4454', 'S4422')
+@param 11 country name (2 letters abbreviation) eg('ng', 'us', 'bg')
+@param 12 phone 1 Area code eg(123, 234, 345)  (optional: null)
+@param 13 phone 1 number eg('5518727323', '0802783893', '081237833767')  (optional: null)
+@param 14 phone 2 Area code eg(123, 234, 345)  (optional: null)
+@param 15 phone 2 number eg('5518727323', '0802783893', '081237833767')  (optional: null)
+*/
+$pay->info('CUR TYP', 'AMT', 'FN', 'LN', 'EML', 'AD1', 'AD2', 'CTY', 'ST', 'ZIP', 'CTRY', 'A CODE 1', 'PHN 1', 'A CODE 2', 'PHN 2');
+$pay->save(false, false, 'redirect');
+if(!$pay->error)
+	var_dump($pay->success);
+else
+	var_dump($pay->error);
+_P_E
+
+	

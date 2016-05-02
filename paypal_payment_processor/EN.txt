@@ -1,0 +1,86 @@
+_P_S
+/*
+%m(0-9)% - Dymamic markers which are replaced at run time by the relevant index.
+*/
+$lang = array();
+//Account
+$lang = array_merge($lang,array(
+	"CU_EMPTY" 		=> "Specify currency type",
+	"AM_EMPTY" 		=> "Specify ammount",
+	"FN_EMPTY" 		=> "Specify first name",
+	"LN_EMPTY" 		=> "Specify last name",
+	"EM_EMPTY" 		=> "Specify email address",
+	"A1_EMPTY" 		=> "Specify address1",
+	"A2_EMPTY" 		=> "Specify address2",
+	"CT_EMPTY" 		=> "Specify city",
+	"ST_EMPTY" 		=> "Specify state name abbreviation",
+	"CY_EMPTY" 		=> "Specify country name abbreviation",
+	"ZP_EMPTY" 		=> "Specify zip code",
+	"P1_EMPTY" 		=> "Specify phone1 Area code",
+	"P2_EMPTY" 		=> "Specify Phone1",
+	"P3_EMPTY" 		=> "Specify Phone2 Area code",
+	"P4_EMPTY" 		=> "Specify Phone2",
+	
+	"CU_INVALID" 	=> "invalid currency type  (characters only) '%m1%' given",
+	"AM_INVALID" 	=> "invalid ammount  (numeric characters only) '%m1%' given",
+	"FN_INVALID" 	=> "invalid first name (Alpha numeric characters only) '%m1%' given",
+	"LN_INVALID" 	=> "invalid last name (Alpha numeric characters only) '%m1%' given",
+	"EM_INVALID" 	=> "invalid email address  '%m1%' given",
+	"A1_INVALID" 	=> "invalid address1 (Alpha numeric characters only) '%m1%' given",
+	"A2_INVALID" 	=> "invalid address2 (Alpha numeric characters only) '%m1%' given",
+	"CT_INVALID" 	=> "invalid city name (Alpha numeric characters only) '%m1%' given",
+	"ST_INVALID" 	=> "invalid state name abbreviation (characters only) '%m1%' given",
+	"CY_INVALID" 	=> "invalid country name abbreviation (characters only) '%m1%' given",
+	"ZP_INVALID" 	=> "invalid zip code  (numeric characters only) '%m1%' given",
+	"P1_INVALID" 	=> "invalid phone1 Area code '%m1%' given",
+	"P2_INVALID" 	=> "invalid Phone1 '%m1%' given",
+	"P3_INVALID" 	=> "invalid Phone2 Area code '%m1%' given",
+	"P4_INVALID" 	=> "invalid Phone2 '%m1%' given",
+	
+
+	"CU_COUNT" 		=> "currency type is below %m1% or above %m2% in length '%m3%' given",
+	"AM_COUNT" 		=> "ammount is below %m1% or above %m2% in length '%m3%' given",
+	"FN_COUNT" 		=> "first name is below %m1% or above %m2% in length  '%m3%' given",
+	"LN_COUNT" 		=> "last name is below %m1% or above %m2% in length  '%m3%' given",
+	"EM_COUNT" 		=> "email address is below %m1% or above %m2% in length '%m3%' given",
+	"A1_COUNT" 		=> "address1 is below %m1% or above %m2% in length '%m3%' given",
+	"A2_COUNT" 		=> "address2 is below %m1% or above %m2% in length '%m3%' given",
+	"CT_COUNT" 		=> "city name is below %m1% or above %m2% in length '%m3%' given",
+	"ST_COUNT" 		=> "state name abbreviation is below %m1% or above %m2% in length '%m3%' given",
+	"CY_COUNT" 		=> "country name abbreviation is below %m1% or above %m2% in length '%m3%' given",
+	"ZP_COUNT" 		=> "zip code is below %m1% or above %m2% in length '%m3%' given",
+	"P1_COUNT" 		=> "phone1 Area code is below %m1% or above %m2% in length '%m3%' given",
+	"P2_COUNT" 		=> "Phone1 is below %m1% or above %m2% in length '%m3%' given",
+	"P3_COUNT" 		=> "Phone2 Area code is below %m1% or above %m2% in length '%m3%' given",
+	"P4_COUNT" 		=> "Phone2 is below %m1% or above %m2% in length '%m3%' given",
+	));
+//email
+$lang = array_merge($lang,array(
+	"DONATION_RECPT" 	=> "Receipt for your Donation at %m1%",
+	"DONATN_MESG" 		=> "Hello %m1%,".PHP_EOL."
+		Thanks for your donation to %m2%.
+		The merchant has completed your transaction. Please see your transaction details and final purchase price below.
+		Payment method	Amount ".PHP_EOL."
+		Donation		%m3%".PHP_EOL."
+		Date			%m4%",
+	));
+	
+//Devs posible errors
+$lang = array_merge($lang,array(
+	"DE_INVALID" 		=> "Umm, is your paypal email correct? @param 2 of payment",
+	"DATA_NT_SVD" 		=> "file wasnt saved please check your privileges",
+	"MAIL_FLD" 			=> "Mail send process (failed)",
+	"NON_SAVED" 		=> "success!! no data was saved nor email sent",
+	"SV_USR_SAVED" 		=> "success!! data was saved. No email sent",
+	"EML_REC_SAVED" 	=> "success!! datas not saved. Email sent to %m1%",
+	"ALL_SAVED" 		=> "success!! datas saved. Email Send to %m1%",
+	
+	"INVALID_PROCS" 	=> "No Payment method called --> %m1% <--, check ur spellings",
+	"INVL_ARG_RTN_1" 		=> "invalid save type argument %m1% ( --> true or false <-- , paypal_email, link_handler)",
+	"INVL_ARG_RTN_2" 		=> "invalid save type argument %m1% (type,  --> true or false <-- , link_handler)",
+	"INVL_ARG_RTN_3" 		=> "invalid save type argument %m1% (type, paypal_email,  --> 'return', 'redirect', empty, null or false <-- )",
+	"INVL_ER_PRO_2" 		=> "invalid error return type argument %m1% (type, paypal_email, -->product name<--, error_return_type)",
+	"INVL_ER_PRO_3" 		=> "invalid error return type argument %m1% (type, paypal_email, error_return_type,   --> array, string, empty or null <-- )",
+	));
+
+_P_E
