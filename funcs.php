@@ -264,9 +264,6 @@ class payment_solution
 			$mail_message = self::lang($payment_type.'_MESG', array($id, $name, $item, SITE_NAME, $data['ammount'], $date));
 		}
 		$subject = self::lang($payment_type.'_RECPT', array(SITE_NAME));
-		echo($subject.'<br>');
-		echo($mail_message);
-		exit;
 		$headers   = array();
 		$headers[] = "MIME-Version: 1.0";
 		$headers[] = "Content-type: text/plain; charset=iso-8859-1";
@@ -482,7 +479,6 @@ class payment_solution
 						//adding $ammount to default mail arg
 						$mail_arg = array_merge($mail_arg, array('ammount'  => $data[0]['amount'].' '.$data[0]['currency_code'], 'items' => $data[0]['name']));
 					}
-					echo $email_user;
 					if($email_user === true && !self::mail_user($mail_arg, $payment_type)){
 						$new_error[] = self::lang("EMAIL_F", $data['email'], $data['payment_id']);
 					}
