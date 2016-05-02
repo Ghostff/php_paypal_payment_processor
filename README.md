@@ -4,87 +4,89 @@ Process payment with paypal Adaptive Payments API [GPP SITE](http://ghostff.com/
 #DONATION
 instantiate
 ```php
-#$pay = payment(payment type, business email, item name, error return type);
-#args as array
-$pay = payment('donate', array('paypal_email', 'Donation to my website', 'string'));
-#args as string
-$pay = payment('donate', 'paypal_email', 'Donation to my website', 'string')
+$pay = payment(PAYMETN_TYPE, 'paypal business or personal email address', 'homeless kids funding', PP_SUCCESS, PP_CANCELED, 'string');
 ```
 
 user defined datas
 ```php
-#data as array 
-$pay->info(array('USD', '50', 'fname', 'lname', 'email', 'addr1', null, 'city', 'state', 'zip', 'country', 'area code', 'phone', null, null));
-#data as string
-$pay->info('USD', 'amt', 'fname', 'lname', 'email', 'addr1', null, 'city', 'tx', 'zip', 'country', 'area code', 'phone', null, null);
+$pay->info('currency type', 'ammount', 'first name', 'last name', 'email address', 'address 1', 'address 2 (optional: null)', 'city name', 'state name (2 letters abbreviation)', 
+		   'zip code', 'country name (2 letters abbreviation)', 'phone 1 Area code', 'phone 1 number ', 'phone 2 Area code', 'phone 2 number');
 ```
 
 data handler
 ```php
-#$pay->save(save user data, email user, url handler);
-$pay->save(false, false, 'return');
+$pay->save(SAVE_PROD_DATA, SAVE_USER_DATA, array('id' => 'lid', 'class' => 'lclas', 'data_id' => 'ldi', 'link' => 'donate to me :(', 'target' => '_black'));
 ```
 
 process stats
 ```php
 if(!$pay->error)
-	var_dump($pay->success);
+	echo($pay->success);
 else
-	var_dump($pay->error);
+	echo($pay->error)
 ```
 
 index prototype
 ```php
 require_once('funcs.php');
-$pay = payment('donate', 'email', 'string');
-$pay->info('USD', 'amt', 'fname', 'lname', 'email', 'addr1', null, 'city', 'tx', 'zip', 'country', 'area code', 'phone', null, null);
-$pay->save(false, false, 'return');
+$pay = payment(PAYMETN_TYPE, 'paypal business or personal email address', 'homeless kids funding', PP_SUCCESS, PP_CANCELED, 'string');
+$pay->info('currency type', 'ammount', 'first name', 'last name', 'email address', 'address 1', 'address 2 (optional: null)', 'city name', 'state name (2 letters abbreviation)', 
+		   'zip code', 'country name (2 letters abbreviation)', 'phone 1 Area code', 'phone 1 number ', 'phone 2 Area code', 'phone 2 number');
+$pay->save(SAVE_PROD_DATA, SAVE_USER_DATA, array('id' => 'lid', 'class' => 'lclas', 'data_id' => 'ldi', 'link' => 'donate to me :(', 'target' => '_black'));
 if(!$pay->error)
-	var_dump($pay->success);
+	echo($pay->success); 
 else
-	var_dump($pay->error);
+	echo($pay->error); 
 ```
 
 #BUY NOW
 instantiate
 ```php
 #instance
-$new[] = _new('name', 'amount', 'id', 'quantity', 'tax', 'shipping', 'shipping charge', 'discount amount', null, null, 'Optional label ');
-$pay = payment('shop', 'frankchris@hotmail.com', $new, 'string', 'sale');
+//$new[] = _new('name', 'amount', 'id', 'quantity', 'tax', no shipping, 'shipping charge', 'discount amount', discount rate, Optional label);
+$new[] = _new('green shirt', '39.99', '18495371', null, '0.5%', '1', '2.44', null, null, 'The padded insole for your comfortable wear');
+
+/*
+for more than one product
+$new[] = _new('white shirt', '32.79', '14s755596', '4', '0.5', '1', '2.44', '2.00', null, null, 'classic-style pumps feature'); -2.00 discount and 0.5 tax
+$new[] = _new('blue shirt', '82.79', '147D5596', '1', '0.5%', '1', '2.44', null, '50', null); 50% discount and 0.5% tax
+$new[] = _new('myebook resale', '32.79', '14755596', null, null, null, null, null, 10%, null);
+$new[] = _new('software product key', '32.79', '14755596');//no ship, tax, discount, label, and quantity is 1
 */
+$pay = payment(PAYMETN_TYPE, 'paypal business or personal email address', $new, PP_SUCCESS, PP_CANCELED, 'string', 'sale');
 ```
 
 user defined datas
 ```php
 #data as array 
-$pay->info(array('USD', 'fname', 'lname', 'email', 'addr1', null, 'city', 'state', 'zip', 'country', 'area code', 'phone', null, null));
-#data as string
-$pay->info('USD', 'fname', 'lname', 'email', 'addr1', null, 'city', 'tx', 'zip', 'country', 'area code', 'phone', null, null);
+$pay->info('currency type', 'first name', 'last name', 'email address', 'address 1', 'address 2 (optional: null)', 'city name', 'state name (2 letters abbreviation)', 
+		   'zip code', 'country name (2 letters abbreviation)', 'phone 1 Area code', 'phone 1 number ', 'phone 2 Area code', 'phone 2 number');
 ```
 
 data handler
 ```php
-#$pay->save(save user data, email user, url handler);
-$pay->save(false, false, 'return');
+$pay->save(SAVE_PROD_DATA, SAVE_USER_DATA, 'redirect');
 ```
 
 process stats
 ```php
 if(!$pay->error)
-	var_dump($pay->success);
+	echo($pay->success);
 else
-	var_dump($pay->error);
+	echo($pay->error);
 ```
 
 index prototype
 ```php
 require_once('funcs.php');
-$new[] = _new('name', 'amount', 'id', 'quantity', 'tax', 'shipping', 'shipping charge', 'discount amount', null, null, 'Optional label ');
-$pay = payment('shop', 'frankchris@hotmail.com', $new, 'string', 'sale');
-$pay->info('USD', 'fname', 'lname', 'email', 'addr1', null, 'city', 'tx', 'zip', 'country', 'area code', 'phone', null, null);
-$pay->save(false, false, 'return');
+$new[] = _new('green shirt', '39.99', '18495371', null, '0.5%', '1', '2.44', null, null, 'The padded insole for your comfortable wear');
+$new[] = _new('myebook resale', '32.79', '14755596', null, null, null, null, null, 10%, null);
+$pay = payment(PAYMETN_TYPE, 'paypal business or personal email address', $new, PP_SUCCESS, PP_CANCELED, 'string', 'sale');
+$pay->info('currency type', 'first name', 'last name', 'email address', 'address 1', 'address 2 (optional: null)', 'city name', 'state name (2 letters abbreviation)', 
+		   'zip code', 'country name (2 letters abbreviation)', 'phone 1 Area code', 'phone 1 number ', 'phone 2 Area code', 'phone 2 number');
+$pay->save(SAVE_PROD_DATA, SAVE_USER_DATA, 'redirect');
 if(!$pay->error)
-	var_dump($pay->success);
+	echo($pay->success);
 else
-	var_dump($pay->error);
+	echo($pay->error);
 ```
