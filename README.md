@@ -32,7 +32,7 @@ require_once('funcs.php');
 $pay = payment(PAYMETN_TYPE, 'paypal business or personal email address', 'homeless kids funding', PP_SUCCESS, PP_CANCELED, 'string');
 $pay->info('currency type', 'ammount', 'first name', 'last name', 'email address', 'address 1', 'address 2 (optional: null)', 'city name', 'state name (2 letters abbreviation)', 
 		   'zip code', 'country name (2 letters abbreviation)', 'phone 1 Area code', 'phone 1 number ', 'phone 2 Area code', 'phone 2 number');
-$pay->save(SAVE_PROD_DATA, SAVE_USER_DATA, array('id' => 'lid', 'class' => 'lclas', 'data_id' => 'ldi', 'link' => 'donate to me :(', 'target' => '_black'));
+$pay->save(SAVE_USER_DATA, SAVE_PROD_DATA, array('id' => 'lid', 'class' => 'lclas', 'data_id' => 'ldi', 'link' => 'donate to me :(', 'target' => '_black'));
 if(!$pay->error)
 	echo($pay->success); 
 else
@@ -84,7 +84,7 @@ $new[] = _new('myebook resale', '32.79', '14755596', null, null, null, null, nul
 $pay = payment(PAYMETN_TYPE, 'paypal business or personal email address', $new, PP_SUCCESS, PP_CANCELED, 'string', 'sale');
 $pay->info('currency type', 'first name', 'last name', 'email address', 'address 1', 'address 2 (optional: null)', 'city name', 'state name (2 letters abbreviation)', 
 		   'zip code', 'country name (2 letters abbreviation)', 'phone 1 Area code', 'phone 1 number ', 'phone 2 Area code', 'phone 2 number');
-$pay->save(SAVE_PROD_DATA, SAVE_USER_DATA, 'redirect');
+$pay->save(SAVE_USER_DATA, SAVE_PROD_DATA, 'redirect');
 if(!$pay->error)
 	echo($pay->success);
 else
