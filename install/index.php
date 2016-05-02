@@ -1,5 +1,4 @@
 <?php
-
 if(isset($_POST['submit'])){
 	$m = $err = 0;
 	$data = $a = array();
@@ -68,7 +67,6 @@ if(isset($_POST['submit'])){
 		file_put_contents($dir.'/stats.php',  $file_cont);
 	}
 }
-
 
 ?>
 
