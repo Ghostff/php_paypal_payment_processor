@@ -32,8 +32,8 @@ $pay->info('currency type', 'ammount', 'first name', 'last name', 'email address
 		   'zip code', 'country name (2 letters abbreviation)', 'phone 1 Area code', 'phone 1 number ', 'phone 2 Area code', 'phone 2 number');
 /*
 ---------- SAVE PARAMS FOR DONATION -------------------
-@param 1  save product information and payment status (default (bool) true)
-@param 2  save users informations (default (bool) true)
+@param 1  save users informations (default (bool) true)
+@param 2  save product information and payment status (default (bool) true)
 @param 3  how to handle paypal rendered link arg('return', 'redirect', (array))
 ---@returrn: 	return the rendered paypal gateway url as string
 ---@redirect:	redirect users browser to paypal payment gateway
@@ -44,7 +44,7 @@ $pay->info('currency type', 'ammount', 'first name', 'last name', 'email address
 				 )
 				  
 */
-$pay->save(SAVE_PROD_DATA, SAVE_USER_DATA, array('id' => 'lid', 'class' => 'lclas', 'data_id' => 'ldi', 'link' => 'donate to me :(', 'target' => '_black'));
+$pay->save(SAVE_USER_DATA, SAVE_PROD_DATA, array('id' => 'lid', 'class' => 'lclas', 'data_id' => 'ldi', 'link' => 'donate to me :(', 'target' => '_black'));
 if(!$pay->error)
 	echo($pay->success); //no error occured in process
 else
@@ -114,8 +114,8 @@ $pay->info('currency type', 'first name', 'last name', 'email address', 'address
 		   'zip code', 'country name (2 letters abbreviation)', 'phone 1 Area code', 'phone 1 number ', 'phone 2 Area code', 'phone 2 number');
 /*
 ---------- SAVE PARAMS FOR DONATION -------------------
-@param 1  save product information and payment status (default (bool) true)
-@param 2  save users informations (default (bool) true)
+@param 1  save users informations (default (bool) true)
+@param 2  save product information and payment status (default (bool) true)
 @param 3  how to handle paypal rendered link arg('return', 'redirect', (array))
 ---@returrn: 	return the rendered paypal gateway url as string
 ---@redirect:	redirect users browser to paypal payment gateway
@@ -126,7 +126,7 @@ $pay->info('currency type', 'first name', 'last name', 'email address', 'address
 				 )
 				  
 */
-$pay->save(SAVE_PROD_DATA, SAVE_USER_DATA, 'redirect');
+$pay->save(SAVE_USER_DATA, SAVE_PROD_DATA, 'redirect');
 if(!$pay->error)
 	echo($pay->success); //no error occured in process
 else

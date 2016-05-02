@@ -15,7 +15,7 @@ $pay->info('currency type', 'ammount', 'first name', 'last name', 'email address
 
 data handler
 ```php
-$pay->save(SAVE_PROD_DATA, SAVE_USER_DATA, array('id' => 'lid', 'class' => 'lclas', 'data_id' => 'ldi', 'link' => 'donate to me :(', 'target' => '_black'));
+$pay->save(SAVE_USER_DATA, SAVE_PROD_DATA, array('id' => 'lid', 'class' => 'lclas', 'data_id' => 'ldi', 'link' => 'donate to me :(', 'target' => '_black'));
 ```
 
 process stats
@@ -65,7 +65,7 @@ $pay->info('currency type', 'first name', 'last name', 'email address', 'address
 
 data handler
 ```php
-$pay->save(SAVE_PROD_DATA, SAVE_USER_DATA, 'redirect');
+$pay->save(SAVE_USER_DATA, SAVE_PROD_DATA, 'redirect');
 ```
 
 process stats
