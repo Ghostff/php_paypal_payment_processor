@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_POST['submit'])){
 	$m = $err = 0;
 	$data = $a = array();
@@ -12,7 +13,7 @@ if(isset($_POST['submit'])){
 			if($m == 0 && ($values != 'donate' && $values != 'shop')){
 				$err = 1;
 				$a[$m][0] = 'red';
-				$a[$m][1] = ' <code> invalid valude expected values (\'shop\' or \'donate\')</code>';
+				$a[$m][1] = ' <code> invalid expected values (\'shop\' or \'donate\')</code>';
 			}
 			else{
 				$data[$m] = $values;
@@ -24,49 +25,79 @@ if(isset($_POST['submit'])){
 	}
 	if($err === 0)
 	{
-		$dir = 'rendered_payment_processor_folder';
+		$dir = 'rendered_'.$data[0].'_payment_processor_folder';
 		if(is_dir($dir))
 			@unlink($dir);
 		@mkdir($dir);
 		
+		$folder = '';
 		if(file_exists($dir.'/index.php'))
 			unlink($dir.'/index.php');
-		$fileamke= function($path) use ($dir){
+		
+		//make folders and subfolders according to url specs
+		$fileamke = function($path, &$folder = null) use ($dir){
 			if(strpos($path, '/') == true){
 				$new_dir = $dir;
 				$new_path = explode('/', $path);
 				array_pop($new_path);
 				foreach($new_path as $dir_name){
 					$new_dir .= '/'.$dir_name;
+					$folder .= '/../'; //for included files that is on a diffrent directory 
 					if(!is_dir($new_dir))
 						mkdir($new_dir);
 				}
 			}
 			return true;
 		};
-		$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%'), array('<?php', '?>', $data[1], $data[10]), 
-								base64_decode(file_get_contents($data[0].'.index.inc')));
+		
+		$inc_path = function($new_path, $path, $folder){
+			//if the included file is not in same folder with the includer
+			if(strstr($new_path, '/', true) != strstr($path, '/', true)){
+				return $folder.$new_path;//set include path the to count of includer path eg(../, ../../)
+			}
+			else{
+				//yes the included files are on same folder
+				$new_path = explode('/', $new_path);//check if included will be in a subfolder
+				array_shift($new_path);	//remove the name of the included folder and leave the subfolder
+				return  implode('/', $new_path);	
+			}
+			
+		};
+		$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%', '%m3%'), array('<?php', '?>', $data[1], $data[2], $data[10]), 
+								base64_decode(file_get_contents($data[0].'.index.txt')));
 		file_put_contents($dir.'/index.php',  $file_cont);//make index file
-		if($fileamke($data[1])){
+		//dubuger: file_put_contents($dir.'/index.php',  base64_decode(file_get_contents($data[0].'.index.txt')));
+		if($fileamke($data[1], $folder)){
 			//make function file
 			$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%', '%m3%'), 
-									array('<?php', '?>', $data[4], $data[3], $data[2]), 
-									base64_decode(file_get_contents($data[0].'.funcs.inc')));
+									array('<?php', '?>', $inc_path($data[4], $data[1], $folder), $inc_path($data[3], $data[1], $folder), $data[2]), 
+									base64_decode(file_get_contents($data[0].'.funcs.txt')));
 			file_put_contents($dir.'/'.$data[1],  $file_cont);
+			//dubuger: file_put_contents($dir.'/'.$data[1],  base64_decode(file_get_contents($data[0].'.funcs.txt')));
 		}
-		if($fileamke($data[4])){
+		if($fileamke($data[3])){
+			//make language file
+			$file_cont = str_replace(array('%m0%', '%m00%', '%m000%'),  array('<?php', '?>', $data[2]), 
+								base64_decode(file_get_contents($data[0].'.lang.txt')));
+			file_put_contents($dir.'/'.$data[3], $file_cont);
+			//dubuger: file_put_contents($dir.'/'.$data[4],  base64_decode(file_get_contents($data[0].'.lang.txt')));
+		}
+		if($fileamke($data[4], $folder)){
 			//make connection and const file
 			$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%', '%m3%', '%m4%', '%m5%', '%m6%',), 
-									array('<?php', '?>', $data[5], $data[6], $data[7], $data[8], $data[11], $data[9]), 
-									base64_decode(file_get_contents($data[0].'.conn.inc')));
+									array('<?php', '?>', $data[11], $data[5], $data[6], $data[7], $data[8], $data[9]), 
+									base64_decode(file_get_contents($data[0].'.conn.txt')));
 			file_put_contents($dir.'/'.$data[4],  $file_cont);
+			//dubuger: file_put_contents($dir.'/'.$data[4],  base64_decode(file_get_contents($data[0].'.conn.txt')));
 		}
 		//make stats file
 		$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%'),  array('<?php', '?>', $data[1], $data[2]), 
-								base64_decode(file_get_contents($data[0].'.stats.inc')));
+								base64_decode(file_get_contents($data[0].'.stats.txt')));
 		file_put_contents($dir.'/stats.php',  $file_cont);
+		//file_put_contents($dir.'/stats.php',  base64_decode(file_get_contents($data[0].'.stats.txt')));
 	}
 }
+
 
 ?>
 
