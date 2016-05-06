@@ -23,9 +23,10 @@ if(isset($_POST['submit'])){
 		}
 		$m++;
 	}
-	if($err === 0)
+	require_once('sql.php');//make database and tables
+	if($err === 0 && $new_error == false)
 	{
-		$dir = 'rendered_'.$data[0].'_payment_processor_folder';
+		$dir = 'rendered_'.$data[0].'_payment_processor';
 		if(is_dir($dir))
 			@unlink($dir);
 		@mkdir($dir);
@@ -47,6 +48,7 @@ if(isset($_POST['submit'])){
 						mkdir($new_dir);
 				}
 			}
+			$folder = str_replace('//', '/', $folder);
 			return true;
 		};
 		
@@ -63,38 +65,39 @@ if(isset($_POST['submit'])){
 			}
 			
 		};
-		$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%', '%m3%'), array('<?php', '?>', $data[1], $data[2], $data[10]), 
+		$data[2] = (trim($data[2]) == false)? $data[0]:$data[2];
+		$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%'), array('<?php', '?>', $data[1], $data[2]), 
 								base64_decode(file_get_contents($data[0].'.index.txt')));
 		file_put_contents($dir.'/index.php',  $file_cont);//make index file
-		//dubuger: file_put_contents($dir.'/index.php',  base64_decode(file_get_contents($data[0].'.index.txt')));
+		//file_put_contents($dir.'/index.php',  base64_decode(file_get_contents($data[0].'.index.txt'))); dubuger: index.index
 		if($fileamke($data[1], $folder)){
 			//make function file
 			$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%', '%m3%'), 
 									array('<?php', '?>', $inc_path($data[4], $data[1], $folder), $inc_path($data[3], $data[1], $folder), $data[2]), 
 									base64_decode(file_get_contents($data[0].'.funcs.txt')));
 			file_put_contents($dir.'/'.$data[1],  $file_cont);
-			//dubuger: file_put_contents($dir.'/'.$data[1],  base64_decode(file_get_contents($data[0].'.funcs.txt')));
+			//file_put_contents($dir.'/'.$data[1],  base64_decode(file_get_contents($data[0].'.funcs.txt'))); dubuger: funcs.php
 		}
 		if($fileamke($data[3])){
 			//make language file
 			$file_cont = str_replace(array('%m0%', '%m00%', '%m000%'),  array('<?php', '?>', $data[2]), 
 								base64_decode(file_get_contents($data[0].'.lang.txt')));
 			file_put_contents($dir.'/'.$data[3], $file_cont);
-			//dubuger: file_put_contents($dir.'/'.$data[4],  base64_decode(file_get_contents($data[0].'.lang.txt')));
+			//file_put_contents($dir.'/'.$data[3],  base64_decode(file_get_contents($data[0].'.lang.txt'))); dubuger: lang.php
 		}
 		if($fileamke($data[4], $folder)){
 			//make connection and const file
-			$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%', '%m3%', '%m4%', '%m5%', '%m6%',), 
-									array('<?php', '?>', $data[11], $data[5], $data[6], $data[7], $data[8], $data[9]), 
+			$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%', '%m3%', '%m4%', '%m5%', '%m6%', '%m7%'), 
+									array('<?php', '?>', $data[11], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10]), 
 									base64_decode(file_get_contents($data[0].'.conn.txt')));
 			file_put_contents($dir.'/'.$data[4],  $file_cont);
-			//dubuger: file_put_contents($dir.'/'.$data[4],  base64_decode(file_get_contents($data[0].'.conn.txt')));
+			//file_put_contents($dir.'/'.$data[4],  base64_decode(file_get_contents($data[0].'.conn.txt'))); dubuger: conn.php
 		}
 		//make stats file
 		$file_cont = str_replace(array('%m0%', '%m00%', '%m1%', '%m2%'),  array('<?php', '?>', $data[1], $data[2]), 
 								base64_decode(file_get_contents($data[0].'.stats.txt')));
 		file_put_contents($dir.'/stats.php',  $file_cont);
-		//file_put_contents($dir.'/stats.php',  base64_decode(file_get_contents($data[0].'.stats.txt')));
+		//file_put_contents($dir.'/stats.php',  base64_decode(file_get_contents($data[0].'.stats.txt'))); dubuger: stats.php
 	}
 }
 
@@ -108,11 +111,8 @@ if(isset($_POST['submit'])){
 <title>Untitled Document</title>
 </head>
 <body>
-<style>
-input{padding:10px; width: 400px;}
-.green{ border:1px solid green; }
-.red{border:1px solid red;}
-</style>
+<style>input{padding:10px; width: 400px;}.green{ border:1px solid green; }.red{border:1px solid red;}.cgreen{color:green;}.cred{color:red;}</style>
+<?php if(@$new_error){ ?> <code class="cred"><?php echo $new_error; ?></code> <?php }else{ ?> <code class="cgreen">SUCCESS!! <?php echo @$_POST['PT']; ?> payment processor installed. (installed folder: <?php echo dirname(__FILE__).DIRECTORY_SEPARATOR.@$_POST['PT']; ?>_payment_processor)</code> <?php } ?>
 <table width="100%" border="0" style="font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif;">
 <form method="post" action="index.php">
   <tbody>
@@ -157,7 +157,7 @@ input{padding:10px; width: 400px;}
       <td><input name="DT" value="<?php echo @$_POST['DT']; ?>" placeholder="eg(payment_proccessor)" class="<?php echo @$a[8][0]; ?>"><?php echo @$a[8][1]; ?></td>
     </tr>
     <tr>
-      <td>working url</td>
+      <td>working url <code>this is the were paypal redirects user at payment completion or cancelation</code></td>
       <td><input name="WN" value="<?php echo @$_POST['WN']; ?>" placeholder="eg(https://ghostff.com/ or https://localhost/)" class="<?php echo @$a[9][0]; ?>"><?php echo @$a[9][1]; ?></td>
     </tr>
     <tr>
@@ -169,7 +169,7 @@ input{padding:10px; width: 400px;}
       <td><input name="WW" value="<?php echo @$_POST['WW']; ?>" placeholder="eg(ghostff, google, facebook)" class="<?php echo @$a[11][0]; ?>"><?php echo @$a[11][1]; ?></td>
     </tr>
     <tr>
-      <td></td>
+      <td width="50%"><?php if(!@$new_error){ ?><code class="cred">NOTE: </code> <code class="cgreen">make sure 'PP_CANCELED' and 'PP_SUCCESS' url in  <?php echo dirname(__FILE__).DIRECTORY_SEPARATOR.@$_POST['PT'].DIRECTORY_SEPARATOR.@$_POST['CN']; ?>" matches the location of stats.php in the <?php echo dirname(__FILE__).DIRECTORY_SEPARATOR.@$_POST['PT']; ?>_payment_processor folder. <code class="cred">this is the url paypal will redirect user at payment completion or cancelation</code></code><?php } ?></td>
       <td> <p /><input name="submit" value="submit" type="submit">    </tr>
   </tbody>
   </form>
