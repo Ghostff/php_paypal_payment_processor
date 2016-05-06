@@ -1,5 +1,5 @@
 <?php
-
+$post = false;
 if(isset($_POST['submit'])){
 	$m = $err = 0;
 	$data = $a = array();
@@ -23,9 +23,11 @@ if(isset($_POST['submit'])){
 		}
 		$m++;
 	}
-	require_once('sql.php');//make database and tables
-	if($err === 0 && $new_error == false)
+	if($err === 0)
+		require_once('sql.php');//make database and tables
+	if( $err === 0 && $new_error == false)
 	{
+		$post = true;
 		$dir = 'rendered_'.$data[0].'_payment_processor';
 		if(is_dir($dir))
 			@unlink($dir);
@@ -112,7 +114,10 @@ if(isset($_POST['submit'])){
 </head>
 <body>
 <style>input{padding:10px; width: 400px;}.green{ border:1px solid green; }.red{border:1px solid red;}.cgreen{color:green;}.cred{color:red;}</style>
-<?php if(@$new_error){ ?> <code class="cred"><?php echo $new_error; ?></code> <?php }else{ ?> <code class="cgreen">SUCCESS!! <?php echo @$_POST['PT']; ?> payment processor installed. (installed folder: <?php echo dirname(__FILE__).DIRECTORY_SEPARATOR.@$_POST['PT']; ?>_payment_processor)</code> <?php } ?>
+<?php if($post){
+ if(@$new_error){ ?> 
+		<code class="cred"><?php echo $new_error; ?></code> <?php }else{ ?> <code class="cgreen">SUCCESS!! <?php echo @$_POST['PT']; ?> payment processor installed. (installed folder: <?php echo dirname(__FILE__).DIRECTORY_SEPARATOR.@$_POST['PT']; ?>_payment_processor)</code> 
+<?php } } ?>
 <table width="100%" border="0" style="font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif;">
 <form method="post" action="index.php">
   <tbody>
@@ -167,9 +172,10 @@ if(isset($_POST['submit'])){
     <tr>
       <td>website name</td>
       <td><input name="WW" value="<?php echo @$_POST['WW']; ?>" placeholder="eg(ghostff, google, facebook)" class="<?php echo @$a[11][0]; ?>"><?php echo @$a[11][1]; ?></td>
-    </tr>
+    </tr> 
     <tr>
-      <td width="50%"><?php if(!@$new_error){ ?><code class="cred">NOTE: </code> <code class="cgreen">make sure 'PP_CANCELED' and 'PP_SUCCESS' url in  <?php echo dirname(__FILE__).DIRECTORY_SEPARATOR.@$_POST['PT'].DIRECTORY_SEPARATOR.@$_POST['CN']; ?>" matches the location of stats.php in the <?php echo dirname(__FILE__).DIRECTORY_SEPARATOR.@$_POST['PT']; ?>_payment_processor folder. <code class="cred">this is the url paypal will redirect user at payment completion or cancelation</code></code><?php } ?></td>
+      <td width="50%"><?php if($post){
+	  if(!@$new_error){ ?><code class="cred">NOTE: </code> <code class="cgreen">make sure 'PP_CANCELED' and 'PP_SUCCESS' url in  <?php echo dirname(__FILE__).DIRECTORY_SEPARATOR.@$_POST['PT'].DIRECTORY_SEPARATOR.@$_POST['CN']; ?>" matches the location of stats.php in the <?php echo dirname(__FILE__).DIRECTORY_SEPARATOR.@$_POST['PT']; ?>_payment_processor folder. <code class="cred">this is the url paypal will redirect user at payment completion or cancelation</code></code><?php }  } ?></td>
       <td> <p /><input name="submit" value="submit" type="submit">    </tr>
   </tbody>
   </form>
