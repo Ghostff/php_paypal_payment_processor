@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 /*
 -------------------------------------------- NOTE ----------------------------------------------------- 
@@ -631,6 +630,4 @@ function _new($name, $amt, $item_id, $quat = null, $tax = null, $no_ship = null,
 		$new['cn_'] = $cn;
 	return $new;
 }
-
->>>>>>> 72bfc297b35b81a21c79e90fddef45b806246f62
 ?>
